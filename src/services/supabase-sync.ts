@@ -1,5 +1,5 @@
 import { isMockClient, supabase } from '@/db/supabase';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export interface ExerciseHistoryViewRow {
   exercise_id: string;
@@ -60,7 +60,7 @@ export async function syncUserDataFromSupabase(userId: string) {
       sort_order: template.sort_order,
     }));
 
-    const store = useGymStore.getState();
+    const store = useJimStore.getState();
 
     // Update store with fetched data
     store.setSyncData({

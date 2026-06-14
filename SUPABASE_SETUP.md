@@ -1,12 +1,12 @@
-# GymOS Supabase Setup Guide
+# Jim Supabase Setup Guide
 
-This guide will walk you through connecting GymOS to Supabase with Google OAuth login.
+This guide will walk you through connecting Jim to Supabase with Google OAuth login.
 
 ## Step 1: Create a Supabase Project
 
 1. Go to [supabase.com](https://supabase.com) and sign up/login
 2. Click **New Project**
-3. Enter a project name (e.g., "gymos-app")
+3. Enter a project name (e.g., "Jim-app")
 4. Create a secure password
 5. Select your region
 6. Click **Create new project** and wait for it to initialize

@@ -7,7 +7,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 import { getNextWorkoutDay, getProgressionSignal } from '@/utils/metrics';
 
 export default function StartWorkoutScreen() {
@@ -15,7 +15,7 @@ export default function StartWorkoutScreen() {
   const theme = useTheme();
   const { dayId } = useLocalSearchParams<{ dayId: string }>();
 
-  const { mesocycles, workoutDays, workoutTemplates, exercises, workoutSessions, exerciseSets, startWorkout } = useGymStore();
+  const { mesocycles, workoutDays, workoutTemplates, exercises, workoutSessions, exerciseSets, startWorkout } = useJimStore();
 
   const day = workoutDays.find((d) => d.id === dayId);
   const activeMeso = mesocycles.find((meso) => meso.is_active);

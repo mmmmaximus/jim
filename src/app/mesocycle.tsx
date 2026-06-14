@@ -8,7 +8,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 interface BuilderExercise {
   exerciseId: string;
@@ -25,7 +25,7 @@ interface BuilderDay {
 
 export default function MesocycleScreen() {
   const theme = useTheme();
-  const { mesocycles, workoutDays, workoutTemplates, exercises, createMesocycle, cloneMesocycle, archiveMesocycle } = useGymStore();
+  const { mesocycles, workoutDays, workoutTemplates, exercises, createMesocycle, cloneMesocycle, archiveMesocycle } = useJimStore();
 
   const [isBuilding, setIsBuilding] = useState(false);
   const [mesoName, setMesoName] = useState('');

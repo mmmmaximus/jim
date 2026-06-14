@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Pressable, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ChevronLeft, Save, Trash2, Calendar } from 'lucide-react-native';
+import { Calendar, ChevronLeft, Save, Trash2 } from 'lucide-react-native';
+import { useState } from 'react';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { useGymStore } from '@/store/gymStore';
-import { calculateWeightMetrics } from '@/utils/metrics';
-import { Spacing, MaxContentWidth } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useJimStore } from '@/store/jimStore';
+import { calculateWeightMetrics } from '@/utils/metrics';
 
 export default function WeightEntryScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const { bodyweightEntries, addBodyweightEntry, deleteBodyweightEntry } = useGymStore();
+  const { bodyweightEntries, addBodyweightEntry, deleteBodyweightEntry } = useJimStore();
 
   const [weightInput, setWeightInput] = useState('');
   const [dateInput, setDateInput] = useState(new Date().toISOString().split('T')[0]);
@@ -49,8 +49,8 @@ export default function WeightEntryScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <KeyboardAvoidingView 
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}
         >
           {/* Header */}
@@ -67,7 +67,7 @@ export default function WeightEntryScreen() {
             {/* Input Card */}
             <ThemedView type="backgroundElement" style={styles.inputCard}>
               <ThemedText type="small" themeColor="textSecondary">ENTER WEIGHT (KG)</ThemedText>
-              
+
               <View style={styles.inputRow}>
                 <TextInput
                   style={[styles.textInput, { color: theme.text, borderColor: theme.backgroundSelected }]}
@@ -97,15 +97,15 @@ export default function WeightEntryScreen() {
                 disabled={!weightInput}
                 style={({ pressed }) => [
                   styles.saveButton,
-                  { 
-                    backgroundColor: weightInput ? '#ffffff' : theme.backgroundSelected, 
-                    opacity: pressed ? 0.9 : 1 
+                  {
+                    backgroundColor: weightInput ? '#ffffff' : theme.backgroundSelected,
+                    opacity: pressed ? 0.9 : 1
                   }
                 ]}
               >
                 <Save size={18} color={weightInput ? '#000000' : theme.textSecondary} />
-                <ThemedText 
-                  type="smallBold" 
+                <ThemedText
+                  type="smallBold"
                   style={{ color: weightInput ? '#000000' : theme.textSecondary }}
                 >
                   Save Entry
@@ -119,7 +119,7 @@ export default function WeightEntryScreen() {
                 <ThemedText type="smallBold" themeColor="textSecondary" style={styles.chartTitle}>
                   7-ENTRY PROGRESS
                 </ThemedText>
-                
+
                 <View style={styles.chartContainer}>
                   {chartEntries.map((entry, idx) => {
                     // Compute percentage height
@@ -138,21 +138,21 @@ export default function WeightEntryScreen() {
                           <ThemedText type="code" style={styles.barVal}>
                             {entry.weight}
                           </ThemedText>
-                          
+
                           {/* Bar */}
                           <View style={styles.barOutline}>
-                            <View 
+                            <View
                               style={[
-                                styles.barFill, 
-                                { 
+                                styles.barFill,
+                                {
                                   height: `${Math.max(5, heightPercent)}%`,
-                                  backgroundColor: theme.text 
+                                  backgroundColor: theme.text
                                 }
-                              ]} 
+                              ]}
                             />
                           </View>
                         </View>
-                        
+
                         {/* Label below bar */}
                         <ThemedText type="code" style={styles.barDate}>
                           {formattedDate}
@@ -182,7 +182,7 @@ export default function WeightEntryScreen() {
                         <ThemedText type="default" style={{ fontWeight: '600' }}>{entry.weight} kg</ThemedText>
                         <ThemedText type="small" themeColor="textSecondary">{entry.date}</ThemedText>
                       </View>
-                      <Pressable 
+                      <Pressable
                         onPress={() => deleteBodyweightEntry(entry.id)}
                         style={({ pressed }) => [styles.deleteButton, { opacity: pressed ? 0.6 : 1 }]}
                       >

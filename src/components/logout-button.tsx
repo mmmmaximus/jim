@@ -6,12 +6,12 @@ import { ThemedText } from '@/components/themed-text';
 import { isMockClient } from '@/db/supabase';
 import { useTheme } from '@/hooks/use-theme';
 import { signOut } from '@/services/auth';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export default function LogoutButton() {
   const router = useRouter();
   const theme = useTheme();
-  const { user, setUser, clearAllData } = useGymStore();
+  const { user, setUser, clearAllData } = useJimStore();
 
   if (!user) return null;
 

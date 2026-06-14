@@ -1,21 +1,20 @@
-import React from 'react';
-import { StyleSheet, View, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Trophy, CheckCircle, Flame, Dumbbell, Award, ArrowUp } from 'lucide-react-native';
+import { ArrowUp, Award, CheckCircle, Dumbbell, Flame, Trophy } from 'lucide-react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { useGymStore } from '@/store/gymStore';
-import { calculateSessionVolume } from '@/utils/metrics';
-import { Spacing, MaxContentWidth } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useJimStore } from '@/store/jimStore';
+import { calculateSessionVolume } from '@/utils/metrics';
 
 export default function WorkoutSummaryScreen() {
   const router = useRouter();
   const theme = useTheme();
-  
-  const { workoutSessions, exerciseSets, exercises, workoutDays } = useGymStore();
+
+  const { workoutSessions, exerciseSets, exercises, workoutDays } = useJimStore();
 
   // The session we just completed is the last one in the list
   const completedSessions = workoutSessions.filter((s) => s.completed_at !== null);
@@ -35,7 +34,7 @@ export default function WorkoutSummaryScreen() {
   const day = workoutDays.find((d) => d.id === lastSession.workout_day_id);
   const sessionSets = exerciseSets.filter((s) => s.session_id === lastSession.id);
   const totalVolume = calculateSessionVolume(lastSession.id, exerciseSets);
-  
+
   // Group sets by exercise
   const exerciseIds = Array.from(new Set(sessionSets.map((s) => s.exercise_id)));
 
@@ -46,7 +45,7 @@ export default function WorkoutSummaryScreen() {
 
   const prevSession = pastSessionsSameDay.length > 0 ? pastSessionsSameDay[0] : null;
   const prevVolume = prevSession ? calculateSessionVolume(prevSession.id, exerciseSets) : 0;
-  
+
   const volumeDiff = totalVolume - prevVolume;
   const volumeDiffPercent = prevVolume > 0 ? (volumeDiff / prevVolume) * 100 : 0;
 
@@ -56,7 +55,7 @@ export default function WorkoutSummaryScreen() {
 
   exerciseIds.forEach((exId) => {
     const exName = exercises.find((e) => e.id === exId)?.name || 'Exercise';
-    
+
     // Max weight in this session
     const currentExSets = sessionSets.filter((s) => s.exercise_id === exId);
     const maxSessionWeight = Math.max(...currentExSets.map((s) => s.weight), 0);
@@ -79,7 +78,7 @@ export default function WorkoutSummaryScreen() {
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          
+
           {/* Header Trophy Banner */}
           <View style={styles.trophyBanner}>
             <Trophy size={64} color="#ffd700" style={styles.trophyIcon} />
@@ -94,12 +93,12 @@ export default function WorkoutSummaryScreen() {
             <View style={styles.statBox}>
               <ThemedText type="small" themeColor="textSecondary">VOLUME LIFTED</ThemedText>
               <ThemedText type="title" style={styles.statNumber}>{totalVolume} kg</ThemedText>
-              
+
               {prevVolume > 0 && (
                 <View style={styles.comparisonRow}>
                   <ArrowUp size={14} color="#30d158" style={{ transform: [{ rotate: volumeDiff >= 0 ? '0deg' : '180deg' }] }} />
-                  <ThemedText 
-                    type="smallBold" 
+                  <ThemedText
+                    type="smallBold"
                     style={{ color: volumeDiff >= 0 ? '#30d158' : '#ff453a' }}
                   >
                     {volumeDiff >= 0 ? '+' : ''}{volumeDiff} kg ({volumeDiffPercent.toFixed(1)}%) vs last cycle
@@ -151,11 +150,11 @@ export default function WorkoutSummaryScreen() {
             <ThemedText type="smallBold" themeColor="textSecondary" style={{ marginBottom: Spacing.two }}>
               EXERCISES COMPLETED
             </ThemedText>
-            
+
             {exerciseIds.map((exId) => {
               const exName = exercises.find((e) => e.id === exId)?.name || 'Exercise';
               const exSets = sessionSets.filter((s) => s.exercise_id === exId);
-              
+
               return (
                 <View key={exId} style={[styles.exerciseRow, { borderBottomColor: theme.backgroundSelected }]}>
                   <ThemedText type="default" style={styles.exName}>{exName}</ThemedText>

@@ -7,13 +7,13 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export default function ExerciseDetailScreen() {
   const router = useRouter();
   const theme = useTheme();
   const { exerciseId } = useLocalSearchParams<{ exerciseId: string }>();
-  const { exercises, exerciseSets, workoutSessions } = useGymStore();
+  const { exercises, exerciseSets, workoutSessions } = useJimStore();
 
   const exercise = exercises.find((item) => item.id === exerciseId);
   const sets = exerciseSets.filter((set) => set.exercise_id === exerciseId);

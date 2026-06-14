@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, TextInput, Pressable, ScrollView, Alert, Platform, KeyboardAvoidingView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ChevronLeft, Check, Play, Pause, RefreshCw, X, AlertTriangle } from 'lucide-react-native';
+import { Check, Pause, RefreshCw, X } from 'lucide-react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { useGymStore, ExerciseSet } from '@/store/gymStore';
-import { Spacing, MaxContentWidth } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { ExerciseSet, useJimStore } from '@/store/jimStore';
 
 export default function ActiveWorkoutScreen() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function ActiveWorkoutScreen() {
     saveActiveSet,
     completeWorkout,
     discardWorkout,
-  } = useGymStore();
+  } = useJimStore();
 
   // Redirect if no active session
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function ActiveWorkoutScreen() {
       return;
     }
     saveActiveSet(exerciseId, setIndex);
-    
+
     // Start / Reset rest timer
     setRestSeconds(0);
     setIsTimerActive(true);
@@ -164,7 +164,7 @@ export default function ActiveWorkoutScreen() {
               <X size={20} color="#ff453a" />
               <ThemedText type="smallBold" style={{ color: '#ff453a' }}>Discard</ThemedText>
             </Pressable>
-            
+
             <View style={{ alignItems: 'center' }}>
               <ThemedText type="smallBold">{day?.name || 'Workout Session'}</ThemedText>
               <ThemedText type="code" style={{ fontSize: 10, opacity: 0.7 }}>
@@ -180,16 +180,16 @@ export default function ActiveWorkoutScreen() {
 
           {/* Progress Indicator */}
           <View style={styles.progressBarBg}>
-            <View 
+            <View
               style={[
-                styles.progressBarFill, 
+                styles.progressBarFill,
                 { width: `${progressPercent}%`, backgroundColor: '#30d158' }
-              ]} 
+              ]}
             />
           </View>
 
-          <ScrollView 
-            ref={scrollRef} 
+          <ScrollView
+            ref={scrollRef}
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="always"
           >
@@ -227,10 +227,10 @@ export default function ActiveWorkoutScreen() {
                       const prevSet = prevPerformance[idx];
 
                       return (
-                        <View 
-                          key={idx} 
+                        <View
+                          key={idx}
                           style={[
-                            styles.tableRow, 
+                            styles.tableRow,
                             setData.saved && { backgroundColor: 'rgba(48, 209, 88, 0.05)' }
                           ]}
                         >
@@ -251,10 +251,10 @@ export default function ActiveWorkoutScreen() {
                           {/* Weight Input */}
                           <TextInput
                             style={[
-                              styles.numberInput, 
+                              styles.numberInput,
                               styles.colInput,
-                              { 
-                                color: theme.text, 
+                              {
+                                color: theme.text,
                                 borderColor: theme.backgroundSelected,
                                 backgroundColor: setData.saved ? 'transparent' : 'rgba(255,255,255,0.02)'
                               }
@@ -271,10 +271,10 @@ export default function ActiveWorkoutScreen() {
                           {/* Reps Input */}
                           <TextInput
                             style={[
-                              styles.numberInput, 
+                              styles.numberInput,
                               styles.colInput,
-                              { 
-                                color: theme.text, 
+                              {
+                                color: theme.text,
                                 borderColor: theme.backgroundSelected,
                                 backgroundColor: setData.saved ? 'transparent' : 'rgba(255,255,255,0.02)'
                               }
@@ -291,10 +291,10 @@ export default function ActiveWorkoutScreen() {
                           {/* RIR Selection */}
                           <TextInput
                             style={[
-                              styles.numberInput, 
+                              styles.numberInput,
                               styles.colRir,
-                              { 
-                                color: theme.text, 
+                              {
+                                color: theme.text,
                                 borderColor: theme.backgroundSelected,
                                 backgroundColor: setData.saved ? 'transparent' : 'rgba(255,255,255,0.02)'
                               }
@@ -313,7 +313,7 @@ export default function ActiveWorkoutScreen() {
                             onPress={() => handleSaveSet(template.exercise_id, idx)}
                             style={({ pressed }) => [
                               styles.saveSetBtn,
-                              { 
+                              {
                                 backgroundColor: setData.saved ? '#30d158' : theme.backgroundSelected,
                                 opacity: pressed ? 0.7 : 1
                               }
@@ -338,20 +338,20 @@ export default function ActiveWorkoutScreen() {
                 <ThemedText type="subtitle" style={styles.timerDigits}>{formatTime(restSeconds)}</ThemedText>
               </View>
               <View style={styles.timerControls}>
-                <Pressable 
-                  onPress={() => setIsTimerActive(false)} 
+                <Pressable
+                  onPress={() => setIsTimerActive(false)}
                   style={[styles.timerControlBtn, { backgroundColor: theme.backgroundSelected }]}
                 >
                   <Pause size={16} color={theme.text} />
                 </Pressable>
-                <Pressable 
-                  onPress={() => setRestSeconds(0)} 
+                <Pressable
+                  onPress={() => setRestSeconds(0)}
                   style={[styles.timerControlBtn, { backgroundColor: theme.backgroundSelected }]}
                 >
                   <RefreshCw size={16} color={theme.text} />
                 </Pressable>
-                <Pressable 
-                  onPress={() => { setIsTimerActive(false); setRestSeconds(0); }} 
+                <Pressable
+                  onPress={() => { setIsTimerActive(false); setRestSeconds(0); }}
                   style={[styles.timerControlBtn, { backgroundColor: 'rgba(255,69,58,0.1)' }]}
                 >
                   <X size={16} color="#ff453a" />

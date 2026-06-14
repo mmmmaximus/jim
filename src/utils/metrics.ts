@@ -1,4 +1,4 @@
-import type { BodyweightEntry, ExerciseSet, Mesocycle, WorkoutDay, WorkoutSession, WorkoutTemplate } from '@/store/gymStore';
+import type { BodyweightEntry, ExerciseSet, Mesocycle, WorkoutDay, WorkoutSession, WorkoutTemplate } from '@/store/jimStore';
 
 export interface WeightMetrics {
   currentWeight: number | null;

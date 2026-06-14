@@ -7,12 +7,12 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 import { calculateSessionVolume, calculateWeightMetrics } from '@/utils/metrics';
 
 export default function AnalyticsScreen() {
   const theme = useTheme();
-  const { bodyweightEntries, workoutSessions, exerciseSets, workoutDays } = useGymStore();
+  const { bodyweightEntries, workoutSessions, exerciseSets, workoutDays } = useJimStore();
 
   const weightMetrics = calculateWeightMetrics(bodyweightEntries);
 

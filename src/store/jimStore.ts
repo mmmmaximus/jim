@@ -89,7 +89,7 @@ export interface ActiveSession {
   };
 }
 
-interface GymState {
+interface JimState {
   user: { id: string; email: string } | null;
   mesocycles: Mesocycle[];
   workoutDays: WorkoutDay[];
@@ -152,7 +152,7 @@ const DEFAULT_EXERCISES = [
   { name: 'Ab Crunch', muscle_group: 'Abs' },
 ];
 
-export const useGymStore = create<GymState>()(
+export const useJimStore = create<JimState>()(
   persist(
     (set, get) => ({
       user: { id: 'offline-user', email: 'offline@jim.app' },

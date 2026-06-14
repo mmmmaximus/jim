@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "gym-os",
-    "slug": "gym-os",
+    "name": "Jim",
+    "slug": "Jim",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "gymos",
+    "scheme": "Jim",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

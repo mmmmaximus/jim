@@ -9,12 +9,12 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export default function ExploreScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const { exercises, createExercise, exerciseSets, workoutSessions } = useGymStore();
+  const { exercises, createExercise, exerciseSets, workoutSessions } = useJimStore();
 
   const [search, setSearch] = useState('');
   const [newExerciseName, setNewExerciseName] = useState('');

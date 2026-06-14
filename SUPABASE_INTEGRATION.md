@@ -1,6 +1,6 @@
 # Supabase Integration - What Was Created
 
-This document outlines all the files and changes made to integrate Supabase auth and storage into GymOS.
+This document outlines all the files and changes made to integrate Supabase auth and storage into Jim.
 
 ## New Files Created
 
@@ -61,7 +61,7 @@ This document outlines all the files and changes made to integrate Supabase auth
 - Listens for auth state changes
 - Conditional rendering (shows AppTabs if user exists, login screen otherwise)
 
-### 3. `src/store/gymStore.ts` - Store with Sync
+### 3. `src/store/jimStore.ts` - Store with Sync
 **Changes**:
 - Added `setUser(user)` action
 - Added `setSyncData(data)` action for bulk data updates

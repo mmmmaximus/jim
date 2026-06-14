@@ -8,13 +8,13 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 import { calculateWeightMetrics, getCurrentMicrocycleNumber, getMesocycleDurationDays, getNextWorkoutDay } from '@/utils/metrics';
 
 export default function HomeScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const { mesocycles, workoutDays, workoutSessions, bodyweightEntries, activeSession } = useGymStore();
+  const { mesocycles, workoutDays, workoutSessions, bodyweightEntries, activeSession } = useJimStore();
 
   const activeMeso = mesocycles.find((meso) => meso.is_active);
   const nextDay = activeMeso ? getNextWorkoutDay(activeMeso.id, workoutDays, workoutSessions) : null;

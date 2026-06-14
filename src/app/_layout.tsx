@@ -8,13 +8,13 @@ import AppTabs from '@/components/app-tabs';
 import { isMockClient, supabase } from '@/db/supabase';
 import { queryClient, setupQueryPersistence } from '@/lib/query-client';
 import { syncUserDataFromSupabase } from '@/services/supabase-sync';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export default function RootLayout() {
   const BYPASS_AUTH_FOR_DEV = false;
   const colorScheme = useColorScheme();
   const router = useRouter();
-  const { setUser, user, initializeDefaultData } = useGymStore();
+  const { setUser, user, initializeDefaultData } = useJimStore();
 
   useEffect(() => {
     setupQueryPersistence();

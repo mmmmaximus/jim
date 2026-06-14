@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getExerciseHistoryViewSupabase } from '@/services/supabase-sync';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export function useExerciseHistory(exerciseId?: string) {
-  const user = useGymStore((state) => state.user);
+  const user = useJimStore((state) => state.user);
 
   return useQuery({
     queryKey: ['exercise-history-view', user?.id, exerciseId],

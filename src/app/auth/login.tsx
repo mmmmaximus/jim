@@ -9,12 +9,12 @@ import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { signInWithEmail, signInWithGoogle, signUpWithEmail } from '@/services/auth';
 import { syncUserDataFromSupabase } from '@/services/supabase-sync';
-import { useGymStore } from '@/store/gymStore';
+import { useJimStore } from '@/store/jimStore';
 
 export default function LoginScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const { setUser } = useGymStore();
+  const { setUser } = useJimStore();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
