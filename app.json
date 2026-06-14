@@ -37,6 +37,7 @@
       ]
     ],
     "experiments": {
+      "baseUrl": "/jim",
       "typedRoutes": true,
       "reactCompiler": true
     }
