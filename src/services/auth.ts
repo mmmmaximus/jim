@@ -5,6 +5,27 @@ import { Platform } from 'react-native';
 
 WebBrowser.maybeCompleteAuthSession();
 
+function getWebOAuthRedirectTo() {
+  if (typeof window === 'undefined') return '/auth/login';
+
+  const { origin, pathname } = window.location;
+  const authSegment = '/auth/';
+  const authIndex = pathname.indexOf(authSegment);
+
+  // Preserve subpath hosting (for example GitHub Pages at /jim).
+  if (authIndex >= 0) {
+    const basePath = pathname.slice(0, authIndex);
+    return `${origin}${basePath}/auth/login`;
+  }
+
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length > 0 && segments[0] !== 'auth') {
+    return `${origin}/${segments[0]}/auth/login`;
+  }
+
+  return `${origin}/auth/login`;
+}
+
 export async function signUpWithEmail(email: string, password: string) {
   if (isMockClient || !supabase) {
     return { data: null, error: { message: 'Supabase not configured. Set env variables.' } };
@@ -38,7 +59,7 @@ export async function signInWithGoogle() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/login`,
+          redirectTo: getWebOAuthRedirectTo(),
           skipBrowserRedirect: true,
         },
       });
